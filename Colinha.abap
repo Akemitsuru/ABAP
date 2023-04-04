@@ -98,3 +98,40 @@ ULINE.
 
 *-----------------------------------------------------------------------------------------
 
+*Calculadora Simples, tratamento de erro e introdução à Classe de mensagem
+
+REPORT ZLAT_EX003 MESSAGE-ID ZLAT_C001.
+
+PARAMETERS: pNum1 TYPE i,
+            pNum2 TYPE i,
+            pSoma RADIOBUTTON GROUP GR1,
+            pSubt RADIOBUTTON GROUP Gr1,
+            pMult RADIOBUTTON GROUP gr1,
+            pDivi RADIOBUTTON GROUP gr1.
+
+DATA: vTotal TYPE p DECIMALS 2.
+
+IF pSoma = 'X'.
+  vTotal = pNum1 + pNum2.
+
+ELSEIF pSubt = 'X'.
+  vTotal = pNum1 - pNum2.
+
+ELSEIF pMult = 'X'.
+  vTotal = pNum1 * pNum2.
+
+ELSEIF pDivi = 'X'.
+  TRY.
+    vTotal = pNum1 / pNum2.
+  CATCH CX_SY_ZERODIVIDE. "Erro copiado da transação ST22 (de tratamento de erros)
+*    MESSAGE 'DIVISÃO POR 0 (ZERO) NÃO PERMITIDA.' TYPE 'I'. "Mensagem do tipo INFORMAÇÃO, por isso o I é maiúsculo
+  MESSAGE I000. "I= tipo de mensagem Informação, 000 Número da classe de mensagem = DIVISÃO POR 0 (ZERO) NÃO PERMITIDA
+  ENDTRY.
+  STOP. "Encerra o programa e reinicia (tela inicial do programa)
+ENDIF.
+
+WRITE:/ 'Resultado: ', vTotal.
+
+uline.
+
+*---------------------------------------------------------------------------------------------
