@@ -49,7 +49,52 @@ uline.
 
 *--------------------------------------------------------------------------
 
+*Calcular desconto ou acréscimo conforme valor de parcelas e da compra
 
+REPORT ZLAT_EX002 NO STANDARD PAGE HEADING.
 
+DATA: vPerD TYPE p Decimals 2, "Valor percentual do Desconto/ Acréscimo
+      vPerc TYPE i, "Valor em porcentagem para visualização
+      vDesc TYPE i, "Valor do Desconto ou Ácréscimo
+      vTipo TYPE String, "Se é Desconto ou Acréscimo
+      vValF Type p DECIMALS 2. "Valor Final com desconto/acréscimo
 
+PARAMETERS: pValor(8)  TYPE p DECIMALS 2, "Valor do produto
+            pParce     TYPE i. "Quantidade de Parcelas
+ULINE.
+
+IF pValor <= 100 AND pParce = 1.
+  vPerD = '-0.15'.
+  vTipo = 'Desconto'.
+
+ELSEIF pValor > 100 AND pParce = 1.
+  vPerD = '-0.20'.
+  vTipo = 'Desconto'.
+
+ELSEIF pValor <= 100 AND pParce <= 3.
+  vPerD = '-0.05'.
+  vTipo = 'Desconto'.
+
+ELSEIF pValor > 100 AND pParce  <= 3.
+  vPerD = '-0.1'.
+  vTipo = 'Desconto'.
+
+ELSEIF pParce > 3.
+  vPerD = '0.1'.
+  vTipo = 'Acréscimo'.
+ENDIF.
+
+vPerc = vPerD * 100.
+vDesc = pValor * vPerD.
+vValF = pValor + vDesc.
+
+WRITE:/ 'Valor Original = R$', pValor,
+      / 'Qtde. Parcelas = ', pParce,
+      / 'Percentual de ', vTipo, ' = ', vPerc, '%',
+      / 'Valor do ', vTipo, ' = ', vDesc,
+      / 'Valor Final = R$', vValF.
+
+ULINE.
+
+*-----------------------------------------------------------------------------------------
 
