@@ -1,16 +1,27 @@
 REPORT ZLAT_EX001 NO STANDARD PAGE HEADING.
 
-PARAMETERS: pNome(40) TYPE c, "C para poder definir tamanho da cadeia de caracteres
-            pAno(4)   TYPE n. "N para definir a quantidade de dígitos numéricos
+PARAMETERS: pNome_a(40) TYPE c, "C para poder definir tamanho da cadeia de caracteres
+            pAno_a(4)   TYPE n, "N para definir a quantidade de dígitos numéricos
+            pNome_b(40) TYPE c,
+            pAno_b(4)   TYPE n
+            .
 
-DATA vIdade(3) TYPE c. "Definir tamanho do resultado para não dar erro
+DATA: vIdade_a(3) TYPE N, "Definir tamanho do resultado para não dar erro
+      vIdade_b(3) TYPE N,
+      vMedia(4)   TYPE P decimals 2.
 
-vIdade = sy-datum(4) - pAno.
+vIdade_a = sy-datum(4) -  pAno_a.
+vIdade_b = sy-datum(4) -  pAno_b.
+vMedia = ( vIdade_a + VIDADE_B ) / 2.
 
-WRITE:/ 'Sr(a). ', pNome,
-      / 'Tem ', vIdade, ' anos.'.
+WRITE:/ 'Sr(a). ', pNome_a,
+      / 'Tem ', vIdade_a, ' anos.',
+      / 'Sr(a). ', pNome_b,
+      / 'Tem ', vIdade_b, ' anos.',
+      / 'A idade média de ', pNome_a, ' e ', pNome_b, ' é de ', vMedia, ' anos.'
+      .
 
-uline. " Para imprimir uma linha
+uline.  " Para imprimir uma linha
 
 *--------------------------------------------------------------------------
 *CÁLCULO IMC
