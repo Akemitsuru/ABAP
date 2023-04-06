@@ -135,3 +135,27 @@ WRITE:/ 'Resultado: ', vTotal.
 uline.
 
 *---------------------------------------------------------------------------------------------
+
+REPORT ZLAT_EX007.
+* Área Retângulo, Perímetro e Raiz Quadrada.
+
+DATA: vArea   TYPE P DECIMALS 4,
+      vPeri   type p DECIMALS 4,
+      vCate   TYPE p DECIMALS 4,
+      vDiag   TYPE p DECIMALS 4
+      .
+
+PARAMETERS: pBase   TYPE p DECIMALs 4,
+            pAltu   TYPE p DECIMALS 4.
+
+vArea = pBase * pAltu.
+vPeri = ( pBase + pAltu ) * 2.
+vCate = ( ( pBase * pBase ) + ( pAltu * pAltu ) ).
+vDiag = sqrt( vCate ).  "Função SQRT() tem que ser escrita sem espaço
+
+WRITE:/ 'Área do Retângulo: ', vArea,
+      / 'Perímetro: ', vPeri,
+      / 'Diagonal: ', vDiag.
+
+uline.
+*-------------------------------------------------------------------------------------------------
