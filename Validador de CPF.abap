@@ -92,12 +92,17 @@ IF VDG10 = VCALC.
   VDG11 = VCPF+10(1).
 
   "WRITE:/ VCALC, ' VDG11=', VDG11.
-
+  " CPF formatting options
+  CLEAR PNUM.
+  WRITE vcpf USING EDIT MASK '___.___.___-__' TO PNUM.
   IF VCALC = VDG11.
      WRITE:/ 'CPF ', PNUM, 'É VÁLIDO!'.
   ENDIF.
 
 ELSE.
+  " CPF formatting options    
+  CLEAR PNUM.
+  WRITE vcpf USING EDIT MASK '___.___.___-__' TO PNUM.  
   WRITE:/ 'CPF ', PNUM, ' É INVÁLIDO!'.
   STOP.
 ENDIF.
