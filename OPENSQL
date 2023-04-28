@@ -107,3 +107,57 @@ ELSEIF p_delete = 'X'.
 
   ENDIF.
   ULINE.
+  
+*&---------------------------------------------------------------------*
+*& Report ZATSR0009
+*&---------------------------------------------------------------------*
+*& SELECT com ENDSELECT
+*&---------------------------------------------------------------------*
+REPORT zatsr0009.
+
+* TABELA TRANSPARENTE
+TABLES t005t.   "Denominação dos países
+
+* TELA DE SELEÇÃO
+PARAMETERS p_spras LIKE t005t-spras DEFAULT 'EN'.    "SPRAS = Código de idioma
+
+ULINE /(30).
+
+WRITE: /01 '|',
+        02 'PAÍS',
+        07 '|',
+        08 'DENOMINAÇÃO',
+        30 '|'.
+ULINE /(30).
+
+*-----------------------------------------------------------------------------------------------------*
+* SELECT permite a leitura de dados do banco de dados; retorna um conjunto de dados (registro) que
+* atendem a um determinado critério. As cláusulas do comando SELECT são as seguintes:
+* SINTAXE:
+*           SELECT <lista de campos>
+* Pode-se selecionar uma lista de campos a serem retornados, separados per espaços. Ou, usando <*>
+* (asterisco) para retornar todos os campos disponíveis.
+* SELECT SINGLE retorna somente um registro que atende às restrições impostas.
+* Caso a tabela tenha sido declarada por meio de TABLES, é automaticamente crido um registro na memória
+* com o mesmo nome para manipulá-la, caso o SELECT traga campos de mais de uma tabela, não é possível
+* utilizar esse artifício. Nesse caso, as tabelas não precisam ser declaradas TABLES, mas a seleção dos
+* campos deve separar o nome da tabela e o campo com um til (~).
+* O uso de SELECT sem especificar SINGLE ou INTO TABLE exige o uso de ENDSELECT.
+*-----------------------------------------------------------------------------------------------------*
+SELECT * FROM t005t WHERE spras = p_spras.
+
+  WRITE: /01 '|',
+          02 T005T-LAND1,
+          07 '|',
+          08 T005T-LANDX,
+          30 '|'.
+
+ULINE /(30).
+
+ENDSELECT.
+
+*---------------------------------------------------------------------------------------------------*
+* No exemplo acima foi utilizado o SELECT com ENDSELECT. Essa instrução tem a performance muito ruim,
+* pois ela faz uma consulta ao BD para cada conteúdo, tornendo o precessamento moroso.
+* Sendo assim, recomenda-se utilizar a opção INTO TABLE.
+*---------------------------------------------------------------------------------------------------*
