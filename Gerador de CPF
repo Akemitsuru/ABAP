@@ -2,7 +2,7 @@
 *& Report ZLAT_ATIV002
 *&---------------------------------------------------------------------*
 *& Escreva um programa que a partir da entrada dos 9 primeiros dígitos de um CPF,
-*& calcule o seu primeiro e o seu segundo dígito verificador. Em seguida, 
+*& calcule o seu primeiro e o seu segundo dígito verificador. Em seguida,
 *& apresente o CPF completo.
 *&---------------------------------------------------------------------*
 REPORT ZLAT_ATIV002.
@@ -33,7 +33,7 @@ vcpf = pnum.
 REPLACE ALL OCCURRENCES OF REGEX '[a-zA-Z[:space:][:punct:][:unicode:]]' IN vCpf WITH ''.
 CONDENSE VCPF.
 CONCATENATE '' VCPF INTO VCPF.
-*WRITE:/ 'vcpf', vcpf.
+WRITE:/ 'vcpf', vcpf.
 
 *VERIFICA, NOVAMENTE, SE O CPF CONTÉM 11 DÍGITOS NUMÉRICOS.
 LEN = STRLEN( VCPF ).
@@ -67,10 +67,13 @@ DO 9 TIMES.
   M = M - 1.
 ENDDO.
 VCALC = ( VSOMA * 10 ).
-*WRITE:/ ' VSOMA=', VSOMA, 'VCALC: ', VCALC.
+WRITE:/ ' VSOMA=', VSOMA, 'VCALC: ', VCALC.
 
 TRY.
   VDG10 =  VCALC MOD 11.
+  IF VDG10 = '*'.
+    VDG10 = 0.
+  ENDIF.
 CATCH CX_SY_CONVERSION_NO_NUMBER.
   VDG10 = 0.
 ENDTRY.
